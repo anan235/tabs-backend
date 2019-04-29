@@ -17,7 +17,8 @@
     "nodemon": "^1.18.11"
   },
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "startmongno": "sudo docker start tabsmongo"
   },
   "repository": {
     "type": "git",

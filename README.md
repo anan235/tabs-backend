@@ -18,6 +18,9 @@ set up mongo database in docker<br>
 `docker pull mongo`<br>
 `docker run -d -p 27017-27019:27017-27019 --name tabsdb mongo:4.0.4`<br>
 
+to get the docker container running simply run<br>
+`npm run startmongo`
+
 to interact with mongo without needing to enter the container we can simply use<br>
 `mongo localhost`
 
