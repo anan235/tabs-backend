@@ -23,8 +23,8 @@ router.post('/createuser', bodyParser, (req, res) => {
     dateJoined: Date.now(),
     lastLogin: null
   }, (err, newUser) => {
-    if (err) res.send('Failed to create user');
-    res.send(`Welcome ${newUser.fname} ${newUser.lname}`);
+    if (err) res.send(err);
+    else res.send(`Welcome ${newUser.fname} ${newUser.lname}`);
   });
 });
 
