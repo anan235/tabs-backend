@@ -17,7 +17,11 @@ router.get('/', (req, res) => {
 router.post('/createuser', bodyParser, (req, res) => {
   User.create({
     fname: req.body.fname,
-    lname: req.body.lname
+    lname: req.body.lname,
+    email: req.body.email,
+    phone: req.body.phone,
+    dateJoined: Date.now(),
+    lastLogin: null
   }, (err, newUser) => {
     if (err) res.send('Failed to create user');
     res.send(`Welcome ${newUser.fname} ${newUser.lname}`);
