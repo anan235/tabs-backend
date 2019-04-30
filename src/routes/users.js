@@ -16,18 +16,14 @@ users.route('/:id')
     res.send(req.user);
   });
 
-users.post('/create', (req, res) => {
-  User.create({
-    fname: req.body.fname,
-    lname: req.body.lname,
-    email: req.body.email,
-    phone: req.body.phone,
-    dateJoined: Date.now(),
-    lastLogin: null
-  }, (err, newUser) => {
-    if (err) res.send(err);
-    else res.send(`Welcome ${newUser.fname} ${newUser.lname}`);
-  });
+users.get('/logout', (req, res, next) => {
+  if (req.session) {
+    // delete session object
+    req.session.destroy((err) => {
+      if (err) return next(err);
+      return res.redirect('/');
+    });
+  }
 });
 
 module.exports = users;
