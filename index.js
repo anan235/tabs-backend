@@ -36,14 +36,9 @@ function requiresLogin(req, res, next) {
 }
 
 // GET home page
-app.get('/', (req, res) => {
+app.get('/', requiresLogin, (req, res) => {
+  console.log(req.session);
   res.send('Hello World!');
-});
-
-app.use((req, res, next) => {
-  var err = new Error('File Not Found');
-  err.status = 404;
-  next(err);
 });
 
 // error handler

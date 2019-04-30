@@ -14,16 +14,9 @@ function getUser(req, res, next) {
 users.route('/:id')
   .get(getUser, (req, res) => {
     res.send(req.user);
+  })
+  .put((req, res) => {
+    res.send('We got our put request!');
   });
-
-users.get('/logout', (req, res, next) => {
-  if (req.session) {
-    // delete session object
-    req.session.destroy((err) => {
-      if (err) return next(err);
-      return res.redirect('/');
-    });
-  }
-});
 
 module.exports = users;

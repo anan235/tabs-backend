@@ -8,6 +8,7 @@ const bcrypt = require('bcrypt');
 var userSchema = new mongoose.Schema({
   fname: String,
   lname: String,
+  displayName: String,
   email: {
     type: String,
     required: true,
@@ -16,12 +17,15 @@ var userSchema = new mongoose.Schema({
     validate: value => validator.isEmail(value)
   },
   password: {
+    minlength: 4,
     type: String,
     required: true
   },
-  phone: Number,
-  dateJoined: Date,
-  lastLogin: Date
+  phone: {
+    type: Number,
+    validate: value => validator.isMobilePhone(value)
+  },
+  dateJoined: Date
 });
 
 userSchema.statics.authenticate = function (email, password, callback) {

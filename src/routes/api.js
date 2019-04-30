@@ -39,6 +39,7 @@ api.post('/register', (req, res, next) => {
   }
 });
 
+// eslint-disable-next-line consistent-return
 api.post('/login', (req, res, next) => {
   if (req.body.email && req.body.password) {
     User.authenticate(req.body.email, req.body.password, (authErr, user) => {
@@ -51,9 +52,21 @@ api.post('/login', (req, res, next) => {
       return res.redirect('/');
     });
   }
-  const err = new Error('Missing email or password');
-  err.status = 400;
-  return next(err);
+  else {
+    const err = new Error('Missing email or password');
+    err.status = 400;
+    return next(err);
+  }
+});
+
+api.post('/logout', (req, res, next) => {
+  if (req.session) {
+    // delete session object
+    req.session.destroy((err) => {
+      if (err) return next(err);
+      return res.redirect('/');
+    });
+  }
 });
 
 module.exports = api;

@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "nodemon index.js",
-    "startmongno": "sudo docker start tabsmongo"
+    "startmongo": "sudo docker start tabsmongo"
   },
   "repository": {
     "type": "git",
