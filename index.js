@@ -24,19 +24,8 @@ app.use(session({
 }));
 app.use('/api', require('./src/routes/api'));
 
-// Middleware
-function requiresLogin(req, res, next) {
-  console.log(req.session);
-  if (req.session && req.session.userId) {
-    return next();
-  }
-  const err = new Error('You must be logged in to view this page.');
-  err.status = 401;
-  return next(err);
-}
-
 // GET home page
-app.get('/', requiresLogin, (req, res) => {
+app.get('/', (req, res) => {
   console.log(req.session);
   res.send('Hello World!');
 });

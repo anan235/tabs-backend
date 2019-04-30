@@ -5,7 +5,7 @@ const validator = require('validator');
 const bcrypt = require('bcrypt');
 
 // User Model Schema
-var userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   fname: String,
   lname: String,
   displayName: String,
@@ -22,11 +22,10 @@ var userSchema = new mongoose.Schema({
     required: true
   },
   phone: {
-    type: Number,
+    type: String,
     validate: value => validator.isMobilePhone(value)
-  },
-  dateJoined: Date
-});
+  }
+}, { timestamps: true });
 
 userSchema.statics.authenticate = function (email, password, callback) {
   this.findOne({ email: email })
@@ -51,6 +50,9 @@ userSchema.statics.authenticate = function (email, password, callback) {
 // Hooks
 userSchema.pre('save', function (next) {
   var user = this;
+  if (!user.displayName) {
+    user.displayName = `${user.fname} ${user.lname.charAt(0).toUpperCase()}`
+  }
   bcrypt.hash(user.password, 10, (err, hash) => {
     if (err) return next(err);
     user.password = hash;
