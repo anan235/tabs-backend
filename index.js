@@ -6,7 +6,6 @@ const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 
 const app = express();
-const router = express.Router();
 
 // connect to mongo
 module.exports = mongoose.connect('mongodb://localhost:27017/tabs');
@@ -26,7 +25,6 @@ app.use('/api', require('./src/routes/api'));
 
 // GET home page
 app.get('/', (req, res) => {
-  console.log(req.session);
   res.send('Hello World!');
 });
 

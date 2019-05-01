@@ -20,11 +20,6 @@ function requiresLogin(req, res, next) {
   return next(err);
 }
 
-users.route('/:id')
-  .get(getUser, (req, res) => {
-    res.send(req.user);
-  });
-
 users.post('/addfriend/:id', requiresLogin, (req, res, next) => {
   const contacts = {
     sender: req.session.userId,
@@ -35,8 +30,15 @@ users.post('/addfriend/:id', requiresLogin, (req, res, next) => {
     { upsert: true, new: true },
     (err, receipt) => {
       if (err) return next(err);
-      return res.send(`Request sent to ${req.params.id}`);
+      return res.send(receipt);
     });
+});
+
+users.get('/getfriends', requiresLogin, (req, res, next) => {
+  User.getFriends(req.session.userId, (err, pendingReqs) => {
+    if (err) return next(err);
+    return res.send(pendingReqs);
+  });
 });
 
 module.exports = users;
