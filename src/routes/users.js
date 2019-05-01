@@ -105,27 +105,5 @@ users.post('/removefriend/:id', requiresLogin, (req, res, next)=>{
     return null
 });
 });
-users.post('/removefriend/:id', requiresLogin, (req, res, next)=>{
-  Friendship.findByIdAndRemove(req.params.id, (err, fRequest) => {
-    if (err) return next(err);
-    // if request was sent by someone other than recipient of request throw 401
-    if(fRequest.recipient != req.session.userId){
-      const error = new Error('lacking credentials to remove friend');
-      error.status = 401;
-      return next(error);
-    }
-
-    const updatedRequest = fRequest;
-    if(updatedRequest.status == 'accepted'){
-      updatedRequest.status = 'remove';
-      updatedRequest.save((saveErr) => {
-        if (saveErr) return next(saveErr);
-        return res.send('Removed Friend');
-    });
-  }
-    else return next(err);
-    return null
-});
-});
 
 module.exports = users;
